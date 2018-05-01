@@ -1,0 +1,20 @@
+**--------Store Receipt--------**
+Order Reference Number: 9964
+Transaction Date: 2018-05-01
+
+**--------Item List--------**
+Items		Amount		Price
+p3: 			1		100
+16GB: 			1		75
+1TB: 			1		50
+19inch: 		1		65
+Mini Tower: 	1		40
+2 Ports: 		1		10
+			+20% Labour Costs
+Total: 					408.0
+
+**---------Customer Details--------**
+Name: Ben
+Email: 123@gmail.com
+Address: 123 street
+**---------------------------------**
