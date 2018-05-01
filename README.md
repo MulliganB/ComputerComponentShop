@@ -1,0 +1,2 @@
+# ComputerComponentShop
+Python practice
