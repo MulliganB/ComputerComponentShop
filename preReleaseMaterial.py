@@ -182,7 +182,6 @@ def checkStock(cart, stock):
 
 def correctStock(cart, stock):
     for key in stock:
-        print("**--------", key, "---------**")
         if key == "Processors":
             for key1 in cart:
                 if key1 == "p3":
@@ -208,7 +207,7 @@ def correctStock(cart, stock):
                 if key1 == "19inch":
                     stock[key].update({"19inch": stock[key]["19inch"]-cart[key1][1]})
                 elif key1 == "23inch": 
-                    stock[key].update({"23inch": stock[key]["23inch"]-cart[key][1]})
+                    stock[key].update({"23inch": stock[key]["23inch"]-cart[key1][1]})
         if key == "Case":
             for key1 in cart:
                 if key1 == "Mini Tower":
@@ -250,7 +249,136 @@ def placeOrder(cart, stock, estimate, date):
     return stock
 
 def dailyOrderList(orderNumber):
-    print(orderNumber)
+    #Over view of whole day
+    print() #Display all details of every order made in session
+    print("**--------Daily Overview--------**")
+    print("Item Number\tOrder Id\tPrice")
+    print("--------------------------------------")
+    count = 1
+    total = 0
+    for i in orderNumber:
+        print ("Item ", count, end="\t\t")
+        for key, value in i.items():
+            if key == "UID":
+                print (value, end="  \t\t")
+            elif key == "Estimate":
+                print (value, end="")
+                total+=value
+        count+=1
+        print("")
+    print("--------------------------------------")
+    print("Daily Net Total: \t\t", total)
+    print("**----------------------------------**")
+    print()
+
+    print("**------------Components Sold----------**")
+    items1 = {'Processors': {'p3': 0, 'p5': 0, 'p7': 0}, 'RAM': {'16GB': 0, '32GB': 0}, 'Storage': {'1TB': 0, '2TB': 0}, 'Screen': {'19inch': 0, '23inch': 0}, 'Case': {'Mini Tower': 0, 'Midi Tower': 0}, 'USB Ports': {'2 Ports': 0, '4 Ports': 0}}
+     
+    for key in items1:
+        if key == "Processors":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "p3":
+                        items1[key].update({"p3": items1[key]["p3"]+value[1]})
+                    elif key1 == "p5":
+                        items1[key].update({"p5": items1[key]["p5"]+value[1]})
+                    elif key1 == "p7":
+                        items1[key].update({"p7": items1[key]["p7"]+value[1]})
+        if key == "RAM":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "16GB":
+                        items1[key].update({"16GB": items1[key]["16GB"]+value[1]})
+                    elif key1 == "32GB":  
+                        items1[key].update({"32GB": items1[key]["32GB"]+value[1]})
+        if key == "Storage":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "1TB":
+                        items1[key].update({"1TB": items1[key]["1TB"]+value[1]})
+                    elif key1 == "2TB": 
+                        items1[key].update({"2TB": items1[key]["2TB"]+value[1]})
+        if key == "Screen":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "19inch":
+                        items1[key].update({"19inch": items1[key]["19inch"]+value[1]})
+                    elif key1 == "23inch": 
+                        items1[key].update({"23inch": items1[key]["23inch"]+value[1]})
+        if key == "Case":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "Mini Tower":
+                        items1[key].update({"Mini Tower": items1[key]["Mini Tower"]+value[1]})
+                    elif key1 == "Midi Tower": 
+                        items1[key].update({"Midi Tower": items1[key]["Midi Tower"]+value[1]})
+        if key == "USB Ports":
+            for i in orderNumber:
+                for key1, value in i.items():
+                    if key1 == "2 Ports":
+                        items1[key].update({"2 Ports": items1[key]["2 Ports"]+value[1]})
+                    elif key1 == "4 Ports": 
+                        items1[key].update({"4 Ports": items1[key]["4 Ports"]+value[1]})                     
+    for key in items1:
+        if key == "Processors":
+            if items1[key]["p3"] > 0:
+                print("p3: ",items1[key]["p3"])
+            if items1[key]["p5"] > 0:
+                print("p5: ",items1[key]["p5"])
+            if items1[key]["p7"] > 0:
+                print("p7: ",items1[key]["p7"])
+        if key == "RAM":
+            if items1[key]["16GB"] > 0:
+                print("16GB: ",items1[key]["16GB"])
+            if items1[key]["32GB"] > 0:
+                print("32GB: ",items1[key]["32GB"])
+        if key == "Storage":
+            if items1[key]["1TB"] > 0:
+                print("1TB: ",items1[key]["1TB"])
+            if items1[key]["2TB"] > 0:
+                print("2TB: ",items1[key]["2TB"])
+        if key == "Screen":
+            if items1[key]["19inch"] > 0:
+                print("19inch: ",items1[key]["19inch"])
+            if items1[key]["23inch"] > 0:
+                print("23inch: ",items1[key]["23inch"])
+        if key == "Case":
+            if items1[key]["Mini Tower"] > 0:
+                print("Mini Tower: ",items1[key]["Mini Tower"])
+            if items1[key]["Midi Tower"] > 0:
+                print("Midi Tower: ",items1[key]["Midi Tower"])
+        if key == "USB Ports":
+            if items1[key]["2 Ports"] > 0:
+                print("2 Ports: ",items1[key]["2 Ports"])
+            if items1[key]["4 Ports"] > 0:
+                print("4 Ports: ",items1[key]["4 Ports"]) 
+    print("**----------------------------------**")
+
+    i = 0
+    print() #Display all details of every order made in session
+    print("**------------Order Details----------**")
+    print()
+    for i in orderNumber:
+        count = 0
+        for key, value in i.items():
+            if count == 0:
+                print("\t**--------Order ", value ,"--------**")
+                count +=1
+            if key == "UID":
+                print("\t", key, ": ", value)
+            elif key == "Customer":
+                print("\t Customer Name: ", value[0])
+                print("\t Customer Email: ", value[1])
+                print("\t Customer Address: ", value[2])
+            elif key == "Date":
+                print("\t", key, ": ", value)
+            elif key == "Estimate":
+                print("\t", key, ": ", value)
+            else:
+                print("\t", key, " (", value[1] ,"): ", value[0]*value[1])
+        print("\t**-------------------------**")
+    print("**----------------------------------**")
+    print()
 
 def displayCurrentCart(cart):
     if cart == 0:
@@ -286,18 +414,19 @@ def printShop(cart, estimate):
         if key != "UID":
             if key != "Date":
                 if key != "Customer":
-                    if key != "19inch" and key != "23inch" and key != "2 Ports" and key != "4 Ports" and key != "Mini Tower" and key != "Midi Tower":
-                        string = str(key) + ": \t\t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
-                    elif key == "Mini Tower" or key == "Midi Tower":
-                        string = str(key) + ": \t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
-                    else:
-                        string = str(key) + ": \t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
+                    if key != "Estimate":
+                        if key != "19inch" and key != "23inch" and key != "2 Ports" and key != "4 Ports" and key != "Mini Tower" and key != "Midi Tower":
+                            string = str(key) + ": \t\t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
+                        elif key == "Mini Tower" or key == "Midi Tower":
+                            string = str(key) + ": \t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
+                        else:
+                            string = str(key) + ": \t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
         if key == "UID":
             string = "Order Reference Number: " + str(cart[key])
             fh.write(string)
@@ -339,18 +468,19 @@ def printCustomer(cart, estimate):
         if key != "UID":
             if key != "Date":
                 if key != "Customer":
-                    if key != "19inch" and key != "23inch" and key != "2 Ports" and key != "4 Ports" and key != "Mini Tower" and key != "Midi Tower":
-                        string = str(key) + ": \t\t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
-                    elif key == "Mini Tower" or key == "Midi Tower":
-                        string = str(key) + ": \t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
-                    else:
-                        string = str(key) + ": \t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
-                        fh.write(string)
-                        fh.write("\n")
+                    if key != "Estimate":
+                        if key != "19inch" and key != "23inch" and key != "2 Ports" and key != "4 Ports" and key != "Mini Tower" and key != "Midi Tower":
+                            string = str(key) + ": \t\t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
+                        elif key == "Mini Tower" or key == "Midi Tower":
+                            string = str(key) + ": \t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
+                        else:
+                            string = str(key) + ": \t\t" + str(cart[key][1]) + "\t\t" + str(cart[key][1]*cart[key][0])
+                            fh.write(string)
+                            fh.write("\n")
         if key == "UID":
             string = "Order Reference Number: " + str(cart[key])
             fh.write(string)
@@ -411,6 +541,7 @@ def Main():
         elif int(inputUser) == 1:
             shoppingCart = createCart()
             estimateValue = estimate(shoppingCart)
+            shoppingCart["Estimate"] = estimateValue
         elif int(inputUser) == 2:
             shoppingCart = checkCart(shoppingCart)
             if checkStock(shoppingCart, stock):
